@@ -96,6 +96,7 @@ float drawRect4(
 void main(){
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
     float aspect = u_resolution.x / u_resolution.y;
+    st.x = st.x * aspect;
     vec2 stcopy = st;
     st = st * 100.0;
     st = fract(st);
@@ -119,13 +120,30 @@ void main(){
     float pct3 = smoothstep(0., 0.2, distance(stcopy + translate * .25, vec2(0.5, 0.5/aspect)));
 
     vec2 translate2 = vec2(sin(u_time),sin(u_time));
-    float pct4 = smoothstep(0., 0.2, distance(stcopy + translate2 * .25, vec2(0.5)));
+    float pct4 = smoothstep(
+        0., 
+        0.2, 
+        distance(stcopy + translate2 * .25, vec2(0.5))
+    );
 
     vec2 translate3 = vec2(- sin(u_time * 1.5),  cos(u_time * 1.));
-    float pct5 = smoothstep(0., 0.2,distance(stcopy + translate3 * .25, vec2(0.5)));
+    float pct5 = smoothstep(
+        0., 
+        0.2,
+        distance(stcopy + translate3 * .25, vec2(0.5)));
 
     vec2 translate4 = vec2(- sin(u_time * .8),  cos(u_time * 1.));
-    float pct6 = smoothstep(0., 0.2,distance(stcopy + translate4 * .25, vec2(0.5)));
+    vec2 rings = stcopy;
+    rings = rings * 2. -1.;
+
+    float pct6 = smoothstep(
+        0., 
+        0.2,
+        distance(
+            stcopy + translate4 * .25, 
+            vec2(0.5)
+        )
+    );
 
     vec2 translate5 = vec2(- sin(u_time * 1.),  cos(u_time * 1.));
     float pct7 = smoothstep(0., 0.2,distance(stcopy + translate5 * .25, vec2(0.5)));
